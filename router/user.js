@@ -55,6 +55,7 @@ router.post("/login", form(
         req.flash("danger", req.form.errors.join(" "));
         return res.redirect("/user/login");
     }
+    var _user;
     User.find().byIdentifier(req.form.identifier).exec().then((user) => {
         if (!user) {
             req.flash("danger", "Check that your username/email and password are correct.");
@@ -64,15 +65,48 @@ router.post("/login", form(
             req.flash("danger", "Your account hasn't been activated yet. Check your email for an activation link!");
             return Promise.reject(res.redirect("/user/login"));
         }
+        _user = user;
         return user.checkPassword(req.form.password);
     }).then((success) => {
         if (!success) {
             req.flash("danger", "Check that your username/email and password are correct.");
             return Promise.reject(res.redirect("/user/login"));
         }
+        let token = new Token({
+            type: "login",
+            uid: _user._id.toString(),
+            sid: utils.randomString(32),
+            userAgent: req.details.userAgent,
+            userIP: req.details.userIP
+        });
+        return token.save();
+    }).then((token) => {
+        req.session.uid = _user._id.toString();
+        req.session.sid = token.sid;
         req.flash("success", "Successfully logged in!");
         return res.redirect("/");
     });
+});
+
+router.get("/logout", (req, res, next) => {
+    if (res.locals.user.isAuthenticated) {
+        Token.findOne({
+            type: "login",
+            uid: req.session.uid,
+            sid: req.session.sid,
+            expired: false
+        }).then((token) => {
+            if (token) {
+                token.expired = true;
+                return token.save();
+            }
+        }).then(() => {
+            delete req.session.uid;
+            delete req.session.sid;
+            req.session.destroy();
+            return res.redirect("/");
+        });
+    }
 });
 
 router.get("/register", (req, res, next) => {

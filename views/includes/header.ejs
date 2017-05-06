@@ -40,7 +40,7 @@
 					<% if (user.isAuthenticated) { %>
 						<div id="nav-user-bar">
 							<a href="/team" title="My Team"><%- user.username %></a>
-							<p style="text-align:right;"><a href="/logout"><small style="font-size:0.5em;">Logout <i class="fa fa-fw fa-sign-out"></i></small></a></p>
+							<p style="text-align:right;"><a href="/user/logout">Logout <i class="fa fa-fw fa-sign-out"></i></a></p>
 						</div>
 						<a class="avatar avatar--nav avatar--guest js-nav-avatar" href="/team" style="background-image:url(https://a.ppy.sh/<%- user.osuid %>);" title="<%- user.username %>"></a>
 					<% } else { %>

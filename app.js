@@ -57,10 +57,15 @@ app.use((req, res, next) => {
     // assign local variables for rendering engine
     res.locals.page = {};
     res.locals.user = {};
+    // for tracking the user
+    req.details = {
+        userAgent: req.headers["user-agent"],
+        userIP: req.headers["x-forwarded-for"] || req.connection.remoteAddress
+    };
     // check if user is authenticated
-    user.isAuthenticated(req).then(() => {
+    user.isAuthenticated(req).then((success) => {
         // cool, user is logged in
-        res.locals.user.isAuthenticated = false;
+        res.locals.user.isAuthenticated = success;
         next();
     }, (reason) => {
         // ignore reason for now lol
