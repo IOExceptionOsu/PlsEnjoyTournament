@@ -1,0 +1,34 @@
+{
+  "name": "plsenjoytournament",
+  "version": "1.0.0",
+  "description": "The infrastructure for the Pls Enjoy Tournament website.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IOExceptionOsu/PlsEnjoyTournament.git"
+  },
+  "author": "IOException",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/IOExceptionOsu/PlsEnjoyTournament/issues"
+  },
+  "homepage": "https://github.com/IOExceptionOsu/PlsEnjoyTournament#readme",
+  "dependencies": {
+    "bcrypt": "^1.0.2",
+    "body-parser": "^1.17.1",
+    "cookie-parser": "^1.4.3",
+    "csurf": "^1.9.0",
+    "ejs": "^2.5.6",
+    "express": "^4.15.2",
+    "express-flash": "0.0.2",
+    "express-form": "^0.12.6",
+    "express-minify": "^0.2.0",
+    "express-session": "^1.15.2",
+    "gmail-send": "^1.2.9",
+    "mongoose": "^4.9.7",
+    "uuid": "^3.0.1"
+  }
+}

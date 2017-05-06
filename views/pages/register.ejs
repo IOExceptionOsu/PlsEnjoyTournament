@@ -1,0 +1,46 @@
+<% include ../includes/header %>
+
+<script type="text/javascript" src="//www.google.com/recaptcha/api.js"></script>
+
+<div class="osu-layout__section osu-layout__section--full js-content community_tournaments-index">
+    <div class="osu-layout__row osu-layout__row--page wiki-header">
+        <div class="text">
+            <h1>register</h1>
+        </div>
+    </div>
+    <div class="osu-layout__row osu-layout__row--page-compact osu-layout__row--sm1">
+        <div class="osu-layout__sub-row">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+                    <div class="row">
+                        <p>Register an individual account here. You will be able to form teams after email <i>and</i> in-game verification for your account have been completed.</p>
+                    </div>
+                    <div class="row">
+                        <% for (let type in messages) { %>
+                            <div class="alert alert-<%- type %>">
+                                <%- messages[type] %>
+                            </div>
+                        <% } %>
+                        <form accept-charset="UTF-8" class="modal-body__form form" method="POST">
+                            <div class="form__input-group form-group form-group--compact">
+                                <input class="modal-af form-group__control form-control form-group__control--compact" name="email" id="email" type="email" placeholder="Email" required="" autocomplete="off" autofocus>
+                                <input class="form-group__control form-control form-group__control--compact" name="username" id="username" type="text" placeholder="osu! Username" required="" autocomplete="off">
+                                <input class="form-group__control form-control form-group__control--compact" name="password" id="password" type="password" placeholder="Create a Password" required="" autocomplete="off">
+                            </div>
+                            <input type="hidden" name="_csrf" value="<%- page.csrfToken %>" />
+                            <button class="btn-osu btn-osu-default form__button" type="submit"><i class="fa fa-sign-in"></i></button>
+                        </form>
+                    </div>
+                    <div class="row">
+                        &nbsp;
+                    </div>
+                    <div class="row">
+                        <p class="modal-body__paragraph"><a href="/user/forgot">Forgotten your password?</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<% include ../includes/footer %>
