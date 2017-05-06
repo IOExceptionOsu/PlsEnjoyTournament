@@ -9,11 +9,11 @@
     <div class="osu-layout__row osu-layout__row--page-compact osu-layout__row--sm1">
         <div class="osu-layout__sub-row">
             <div class="row">
-                <div class="col-md-2 col-md-offset-2">
+                <div class="col-md-3 col-md-offset-2">
                     <h4>don't have an account?</h4>
                     <p><a href="/user/register">make one now &raquo;</a></p>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-5">
                     <div class="row">
                         <% for (let type in messages) { %>
                             <div class="alert alert-<%- type %>">
@@ -22,7 +22,7 @@
                         <% } %>
                         <form accept-charset="UTF-8" class="modal-body__form form" method="POST">
                             <div class="form__input-group form-group form-group--compact">
-                                <input class="modal-af form-group__control form-control form-group__control--compact" name="email" id="email" type="email" placeholder="Email" required="" autocomplete="off" autofocus>
+                                <input class="modal-af form-group__control form-control form-group__control--compact" name="identifier" id="identifier" type="text" placeholder="Username or email" required="" autocomplete="off" autofocus>
                                 <input class="form-group__control form-control form-group__control--compact" name="password" id="password" type="password" placeholder="Password" required="" autocomplete="off">
                             </div>
                             <input type="hidden" name="_csrf" value="<%- page.csrfToken %>" />

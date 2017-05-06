@@ -13,6 +13,11 @@
 		<div class="pippy"></div>
 	</div>
 	<div class="osu-layout__row">
+		<% for (let type in messages) { %>
+			<div class="alert alert-<%- type %>">
+				<%- messages[type] %>
+			</div>
+		<% } %>
 		<div id="forum-1" class="forum-category col-sm-12 forum-colour category-osu">
 			<div class="row forum-category-header forum-colour__bg--category-osu">
 				<div class="forum-category-header__name">General Information</div>

@@ -2,10 +2,37 @@ let express = require("express");
 let form = require("express-form"), field = form.field;
 
 let models = require("../models"),
+    Token = models.Token,
     User = models.User;
 let utils = require("../utils");
 
 let router = express.Router();
+
+router.get("/verify/:code", (req, res, next) => {
+    let code = req.params.code;
+    if (!code) {
+        req.flash("danger", "Code not found.");
+        return res.redirect("/");
+    }
+    User.findOne({ emailCode: code }).then((user) => {
+        if (!user) {
+            req.flash("danger", "Code not found.");
+            return Promise.reject(res.redirect("/"));
+        }
+        if (user.emailVerified) {
+            req.flash("danger", "Email already verified.");
+            return Promise.reject(res.redirect("/"));
+        }
+        user.emailVerified = true;
+        return user.save();
+    }, () => {
+        req.flash("danger", "Code not found.");
+        return Promise.reject(res.redirect("/"));
+    }).then((user) => {
+        req.flash("success", "Thanks for verifying your email! You can log in now.");
+        return res.redirect("/user/login");
+    });
+});
 
 router.get("/login", (req, res, next) => {
     if (res.locals.user.isAuthenticated) {
@@ -16,15 +43,41 @@ router.get("/login", (req, res, next) => {
     res.render("pages/login");
 });
 
-router.post("/login", (req, res, next) => {
+router.post("/login", form(
+    field("identifier").trim().required(),
+    field("password").required()
+), (req, res, next) => {
     if (res.locals.user.isAuthenticated) {
+        // user is already logged in
         return res.redirect("/");
     }
-    return res.redirect("/user/login");
+    if (!req.form.isValid) {
+        req.flash("danger", req.form.errors.join(" "));
+        return res.redirect("/user/login");
+    }
+    User.find().byIdentifier(req.form.identifier).exec().then((user) => {
+        if (!user) {
+            req.flash("danger", "Check that your username/email and password are correct.");
+            return Promise.reject(res.redirect("/user/login"));
+        }
+        if (!user.emailVerified) {
+            req.flash("danger", "Your account hasn't been activated yet. Check your email for an activation link!");
+            return Promise.reject(res.redirect("/user/login"));
+        }
+        return user.checkPassword(req.form.password);
+    }).then((success) => {
+        if (!success) {
+            req.flash("danger", "Check that your username/email and password are correct.");
+            return Promise.reject(res.redirect("/user/login"));
+        }
+        req.flash("success", "Successfully logged in!");
+        return res.redirect("/");
+    });
 });
 
 router.get("/register", (req, res, next) => {
     if (res.locals.user.isAuthenticated) {
+        // user is already logged in
         return res.redirect("/");
     }
     res.locals.page.csrfToken = req.csrfToken();
@@ -47,7 +100,6 @@ router.post("/register", form(
     // hash the password
     User.find().byEmail(req.form.email).exec().then((user) => {
         if (user) {
-            console.log(user);
             req.flash("danger", "This email has already been registered.");
             return Promise.reject(res.redirect("/user/register"));
         }
