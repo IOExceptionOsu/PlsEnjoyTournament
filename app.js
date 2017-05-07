@@ -5,6 +5,8 @@
  * License: plz no copy
  */
 
+Error.stackTraceLimit = Infinity;
+
 let bodyParser = require("body-parser");
 let cookieParser = require("cookie-parser");
 let csurf = require("csurf");
@@ -52,6 +54,7 @@ app.use(flash());
 app.use("/static", express.static("static"));
 // custom user auth middleware
 app.use((req, res, next) => {
+    console.log(`${req.method} ${req.path}`);
     // assign local variables for rendering engine
     res.locals.page = {};
     res.locals.user = {};
@@ -61,19 +64,33 @@ app.use((req, res, next) => {
         userIP: req.headers["x-forwarded-for"] || req.connection.remoteAddress
     };
     // check if user is authenticated
-    user.isAuthenticated(req, res).then((success) => {
+    user.isAuthenticated(req, res).then((user) => {
         // cool, user is logged in
-        res.locals.user.isAuthenticated = success;
-        next();
+        res.locals.user.isAuthenticated = true;
+        return user.team();
     }, (reason) => {
         // ignore reason for now lol
         res.locals.user.isAuthenticated = false;
+        return user.team();
+    }).then((team) => {
+        res.locals.user.team = team;
+        next();
+    }, () => {
         next();
     });
 });
 
 // route the pages
 app.use(router);
+
+// error handler
+app.use((err, req, res, next) => {
+    if (err) {
+        console.log("SHIET");
+        return res.send("shiet");
+    }
+    return res.send("no error?");
+});
 
 let port = parseInt(process.env.PORT || "3000");
 app.listen(port, () => {

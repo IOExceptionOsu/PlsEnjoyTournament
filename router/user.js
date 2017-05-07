@@ -90,9 +90,12 @@ router.get("/logout", (req, res, next) => {
             // delete the session
             delete req.session.uid;
             delete req.session.sid;
-            req.session.destroy();
+            if (req.session.destroy)
+                req.session.destroy();
             return res.redirect("/");
         });
+    } else {
+        return res.redirect("/");
     }
 });
 
@@ -146,7 +149,7 @@ router.post("/register", form(
         });
         return user.save();
     }).then((user) => {
-        let email = utils.activationEmail(`${req.protocol}://${req.headers.host}/user/verify/${user.emailCode}`);
+        let email = utils.activationEmail(`${req.protocol}://${req.headers.host}/user/verify/email/${user.emailCode}`);
         return utils.sendEmail(req.form.email, email.subject, email.body);
     }).then((result) => {
         req.flash("success", "Thanks for registering! Check your email for the activation link.");
@@ -155,7 +158,7 @@ router.post("/register", form(
     });
 });
 
-router.get("/verify/:code", (req, res, next) => {
+router.get("/verify/email/:code", (req, res, next) => {
     let code = req.params.code;
     if (!code) {
         req.flash("danger", "Code not found.");
@@ -178,6 +181,51 @@ router.get("/verify/:code", (req, res, next) => {
     }).then((user) => {
         req.flash("success", "Thanks for verifying your email! You can log in now.");
         return res.redirect("/user/login");
+    });
+});
+
+router.get("/verify/osu/:code", (req, res, next) => {
+    let code = req.params.code;
+    if (!code) {
+        req.flash("danger", "Code not found.");
+        return res.redirect("/");
+    }
+    User.findOne({ osuCode: code }).then((user) => {
+        if (!user) {
+            req.flash("danger", "Code not found.");
+            return Promise.reject(res.redirect("/"));
+        }
+        if (user.osuVerified) {
+            req.flash("danger", "osu! account already verified.");
+            return Promise.reject(res.redirect("/"));
+        }
+        user.osuVerified = true;
+        return user.save();
+    }, () => {
+        req.flash("danger", "Code not found.");
+        return Promise.reject(res.redirect("/"));
+    }).then((user) => {
+        req.flash("success", "Thanks for verifying your osu! account!");
+        return res.redirect("/user/profile");
+    });
+});
+
+router.get("/verify/osu", requireLogin, (req, res, next) => {
+    if (!(process.env.OSU_IRCHOST && process.env.OSU_USERNAME && process.env.OSU_IRCKEY)) {
+        console.log(process.env);
+        req.flash("danger", "osu! verification hasn't been set up properly. Please contact an admin.");
+        return res.redirect("/user/profile");
+    }
+    let user = res.locals.user;
+    let token = utils.randomString(32);
+    res.locals.user.osuCode = token;
+    res.locals.user.osuVerified = false;
+    res.locals.user.save().then(() => {
+        let link = `${req.protocol}://${req.headers.host}/user/verify/osu/${user.osuCode}`;
+        return utils.sendInGameMessage(user.username, `Click [${link} this link] to verify your pls enjoy tournament account.`);
+    }).then(() => {
+        req.flash("info", `Verification link has been sent. Check your messages (from ${process.env.OSU_USERNAME})!`);
+        return res.redirect("/user/profile");
     });
 });
 

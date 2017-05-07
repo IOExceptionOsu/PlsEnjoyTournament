@@ -21,16 +21,9 @@ let isAuthenticated = (req, res) => {
         if (!user)
             return Promise.reject();
         res.locals.user = user;
-        return User.team();
+        return Promise.resolve(user);
     }, () => {
         return Promise.reject();
-    }).then((team) => {
-        // set team information
-        res.locals.user.team = team;
-        return Promise.resolve(true);
-    }, () => {
-        res.locals.user.team = null;
-        return Promise.resolve(true);
     });
 };
 

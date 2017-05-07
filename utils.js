@@ -1,5 +1,6 @@
 let bcrypt = require("bcrypt");
 let gmailSend = require("gmail-send");
+let net = require("net");
 
 let activationEmail = (link) => {
     return {
@@ -46,3 +47,27 @@ let sendEmail = (recipient, subject, body) => {
 };
 
 module.exports.sendEmail = sendEmail;
+
+let sendInGameMessage = (username, message) => {
+    return new Promise((resolve, reject) => {
+        let filteredUsername = username.replace(/\W+/g, "_");
+        let client = new net.Socket();
+        client.connect(6667, process.env.OSU_IRCHOST, () => {
+            client.write(`PASS ${process.env.OSU_IRCKEY}\n`);
+            client.write(`NICK ${process.env.OSU_USERNAME}\n`);
+            client.on("data", (data) => {
+                data = data.toString("utf-8");
+                console.log(data);
+                if (data.indexOf("osu!bancho") !== -1) {
+                    client.write(`PRIVMSG ${filteredUsername} :${message}\n`);
+                    client.destroy();
+                    resolve();
+                } else {
+                    reject();
+                }
+            });
+        });
+    });
+};
+
+module.exports.sendInGameMessage = sendInGameMessage;
