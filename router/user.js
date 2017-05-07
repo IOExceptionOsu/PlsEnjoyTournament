@@ -6,33 +6,18 @@ let models = require("../models"),
     User = models.User;
 let utils = require("../utils");
 
-let router = express.Router();
-
-router.get("/verify/:code", (req, res, next) => {
-    let code = req.params.code;
-    if (!code) {
-        req.flash("danger", "Code not found.");
-        return res.redirect("/");
-    }
-    User.findOne({ emailCode: code }).then((user) => {
-        if (!user) {
-            req.flash("danger", "Code not found.");
-            return Promise.reject(res.redirect("/"));
-        }
-        if (user.emailVerified) {
-            req.flash("danger", "Email already verified.");
-            return Promise.reject(res.redirect("/"));
-        }
-        user.emailVerified = true;
-        return user.save();
-    }, () => {
-        req.flash("danger", "Code not found.");
-        return Promise.reject(res.redirect("/"));
-    }).then((user) => {
-        req.flash("success", "Thanks for verifying your email! You can log in now.");
+// middleware for requiring login
+let requireLogin = (req, res, next) => {
+    if (!res.locals.user.isAuthenticated) {
+        req.flash("danger", "You must be logged in to see this page.");
         return res.redirect("/user/login");
-    });
-});
+    }
+    next();
+};
+
+module.exports.requireLogin = requireLogin;
+
+let router = express.Router();
 
 router.get("/login", (req, res, next) => {
     if (res.locals.user.isAuthenticated) {
@@ -40,7 +25,7 @@ router.get("/login", (req, res, next) => {
         return res.redirect("/");
     }
     res.locals.page.csrfToken = req.csrfToken();
-    res.render("pages/login");
+    res.render("user/login");
 });
 
 router.post("/login", form(
@@ -90,6 +75,7 @@ router.post("/login", form(
 
 router.get("/logout", (req, res, next) => {
     if (res.locals.user.isAuthenticated) {
+        // disable token
         Token.findOne({
             type: "login",
             uid: req.session.uid,
@@ -101,6 +87,7 @@ router.get("/logout", (req, res, next) => {
                 return token.save();
             }
         }).then(() => {
+            // delete the session
             delete req.session.uid;
             delete req.session.sid;
             req.session.destroy();
@@ -109,13 +96,17 @@ router.get("/logout", (req, res, next) => {
     }
 });
 
+router.get("/profile", requireLogin, (req, res, next) => {
+    res.render("user/profile");
+});
+
 router.get("/register", (req, res, next) => {
     if (res.locals.user.isAuthenticated) {
         // user is already logged in
         return res.redirect("/");
     }
     res.locals.page.csrfToken = req.csrfToken();
-    res.render("pages/register");
+    res.render("user/register");
 });
 
 router.post("/register", form(
@@ -161,6 +152,32 @@ router.post("/register", form(
         req.flash("success", "Thanks for registering! Check your email for the activation link.");
         res.redirect("/user/login");
         next();
+    });
+});
+
+router.get("/verify/:code", (req, res, next) => {
+    let code = req.params.code;
+    if (!code) {
+        req.flash("danger", "Code not found.");
+        return res.redirect("/");
+    }
+    User.findOne({ emailCode: code }).then((user) => {
+        if (!user) {
+            req.flash("danger", "Code not found.");
+            return Promise.reject(res.redirect("/"));
+        }
+        if (user.emailVerified) {
+            req.flash("danger", "Email already verified.");
+            return Promise.reject(res.redirect("/"));
+        }
+        user.emailVerified = true;
+        return user.save();
+    }, () => {
+        req.flash("danger", "Code not found.");
+        return Promise.reject(res.redirect("/"));
+    }).then((user) => {
+        req.flash("success", "Thanks for verifying your email! You can log in now.");
+        return res.redirect("/user/login");
     });
 });
 

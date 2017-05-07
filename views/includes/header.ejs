@@ -25,9 +25,8 @@
 				<div id="nav-links">
 					<ul id="nav-menu" class="js-menu osu-nav__menu">
 						<li class="community active"><a class="osu-nav__link osu-nav__link--active" href="/">about</a></li>
-						<li><a class="osu-nav__link yellow-normal" href="https://osu.ppy.sh/forum/t/391380" target="_blank">forum post</a></li>
-						<li><a class="osu-nav__link" href="/mappool">mappool</a></li>
-						<li><a class="osu-nav__link" href="/teams">teams</a></li>
+						<li><a class="osu-nav__link yellow-normal" href="https://osu.ppy.sh/forum/t/590909" target="_blank">forum post</a></li>
+						<li><a class="osu-nav__link" href="/teams">all teams</a></li>
 						<% if (user.isAuthenticated) { %>
 							<li><a class="osu-nav__link yellow-normal" href="/team">my team</a></li>
 						<% } %>
@@ -39,10 +38,12 @@
 				<div class="flex-none nav-user-bar-container">
 					<% if (user.isAuthenticated) { %>
 						<div id="nav-user-bar">
-							<a href="/team" title="My Team"><%- user.username %></a>
-							<p style="text-align:right;"><a href="/user/logout">Logout <i class="fa fa-fw fa-sign-out"></i></a></p>
+							<p style="text-align:right;">
+								<a href="/user/profile"><%- user.username %></a>
+								<a href="/user/logout"><small style="display:block;font-size:0.6em;">Logout <i class="fa fa-fw fa-sign-out"></i></small></a>
+							</p>
 						</div>
-						<a class="avatar avatar--nav avatar--guest js-nav-avatar" href="/team" style="background-image:url(https://a.ppy.sh/<%- user.osuid %>);" title="<%- user.username %>"></a>
+						<a class="avatar avatar--nav avatar--guest js-nav-avatar" href="/user/profile" style="background-image:url(https://a.ppy.sh/<%- user.osuid %>);" title="<%- user.username %>"></a>
 					<% } else { %>
 						<div id="nav-user-bar">
 							<a href="/user/login">Not Logged In</a>

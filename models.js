@@ -15,6 +15,16 @@ let TokenSchema = new mongoose.Schema({
 
 module.exports.Token = mongoose.model("Token", TokenSchema);
 
+let TeamSchema = new mongoose.Schema({
+    "_id": { type: String, default: uuid.v4 },
+});
+
+TeamSchema.methods.members = function () {
+    return module.exports.User.find({ teamid: this._id.toString() });
+};
+
+module.exports.Team = mongoose.model("Team", TeamSchema);
+
 let UserSchema = new mongoose.Schema({
     "_id": { type: String, default: uuid.v4 },
     "admin": { type: Boolean, default: false },
@@ -48,6 +58,10 @@ UserSchema.query.byUsername = function (username) {
 
 UserSchema.methods.checkPassword = function (candidate) {
     return bcrypt.compare(candidate, this.password);
+};
+
+UserSchema.methods.team = function () {
+    return module.exports.Team.findOne({ _id: this.teamid });
 };
 
 module.exports.User = mongoose.model("User", UserSchema);

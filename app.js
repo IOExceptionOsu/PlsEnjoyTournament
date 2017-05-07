@@ -13,7 +13,7 @@ let flash = require("express-flash");
 let minify = require("express-minify");
 let mongoose = require("mongoose");
 let path = require("path");
-let session = require("express-session");
+let session = require("cookie-session");
 
 let router = require("./router");
 let user = require("./user");
@@ -39,10 +39,8 @@ app.use(cookieParser(process.env.COOKIE_SECRET));
 // express session management
 app.use(session({
     name: "plsenjoy.session",
-    resave: false,
     saveUninitialized: true,
-    secret: process.env.COOKIE_SECRET,
-    cookie: { /*secure: true*/ }
+    keys: [process.env.COOKIE_SECRET]
 }));
 // minify html pages
 app.use(minify());
@@ -63,7 +61,7 @@ app.use((req, res, next) => {
         userIP: req.headers["x-forwarded-for"] || req.connection.remoteAddress
     };
     // check if user is authenticated
-    user.isAuthenticated(req).then((success) => {
+    user.isAuthenticated(req, res).then((success) => {
         // cool, user is logged in
         res.locals.user.isAuthenticated = success;
         next();
