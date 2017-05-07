@@ -18,6 +18,8 @@ let isAuthenticated = (req, res) => {
         return Promise.reject();
     }).then((user) => {
         // set user information
+        if (!user)
+            return Promise.reject();
         res.locals.user = user;
         return User.team();
     }, () => {
