@@ -17,6 +17,7 @@ module.exports.Token = mongoose.model("Token", TokenSchema);
 
 let UserSchema = new mongoose.Schema({
     "_id": { type: String, default: uuid.v4 },
+    "admin": { type: Boolean, default: false },
     "osuid": Number,
     "teamid": String,
     "username": String,
