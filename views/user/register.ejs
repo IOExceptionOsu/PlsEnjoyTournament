@@ -13,7 +13,7 @@
             <div class="row">
                 <div class="col-md-6 col-md-offset-3">
                     <div class="row">
-                        <p>Register an individual account here. You will be able to form teams after email <i>and</i> in-game verification for your account have been completed.</p>
+                        <p>Only register if you are the team captain. You will be making an account for your entire team. You will be able to confirm your registration information after your account is created.</p>
                     </div>
                     <div class="row">
                         <% for (let type in messages) { %>
@@ -21,15 +21,23 @@
                                 <%- messages[type] %>
                             </div>
                         <% } %>
-                        <form accept-charset="UTF-8" class="modal-body__form form" method="POST">
-                            <div class="form__input-group form-group form-group--compact">
-                                <input class="modal-af form-group__control form-control form-group__control--compact" name="email" id="email" type="email" placeholder="Email" required="" autocomplete="off" autofocus>
-                                <input class="form-group__control form-control form-group__control--compact" name="username" id="username" type="text" placeholder="osu! Username" required="" autocomplete="off">
-                                <input class="form-group__control form-control form-group__control--compact" name="password" id="password" type="password" placeholder="Create a Password" required="" autocomplete="off">
+                        <% if (Date.now() > page.registrationOpen) { %>
+                            <form accept-charset="UTF-8" class="modal-body__form form" method="POST">
+                                <div class="form__input-group form-group form-group--compact">
+                                    <input class="modal-af form-group__control form-control form-group__control--compact" name="email" id="email" type="email" placeholder="Email" required="" autocomplete="off" autofocus>
+                                    <input class="form-group__control form-control form-group__control--compact" name="username" id="username" type="text" placeholder="osu! Username" required="" autocomplete="off">
+                                    <input class="form-group__control form-control form-group__control--compact" name="password" id="password" type="password" placeholder="Create a Password" required="" autocomplete="off">
+                                </div>
+                                <input type="hidden" name="_csrf" value="<%- page.csrfToken %>" />
+                                <button class="btn-osu btn-osu-default form__button" type="submit"><i class="fa fa-sign-in"></i></button>
+                            </form>
+                        <% } else { %>
+                            <div class="alert alert-danger">Sorry, registration hasn't opened yet!</div>
+                            <div>
+                                <iframe style="vertical-align: top;" width="350" height="180" src="https://w2.countingdownto.com/1823437" frameborder="0"></iframe>
+                                <-- ignore this "buy now" message
                             </div>
-                            <input type="hidden" name="_csrf" value="<%- page.csrfToken %>" />
-                            <button class="btn-osu btn-osu-default form__button" type="submit"><i class="fa fa-sign-in"></i></button>
-                        </form>
+                        <% } %>
                     </div>
                     <div class="row">
                         &nbsp;

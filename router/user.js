@@ -15,8 +15,6 @@ let requireLogin = (req, res, next) => {
     next();
 };
 
-module.exports.requireLogin = requireLogin;
-
 let router = express.Router();
 
 router.get("/login", (req, res, next) => {
@@ -99,8 +97,9 @@ router.get("/logout", (req, res, next) => {
     }
 });
 
-router.get("/profile", requireLogin, (req, res, next) => {
-    res.render("user/profile");
+router.get("/settings", requireLogin, (req, res, next) => {
+    res.locals.page.csrfToken = req.csrfToken();
+    res.render("user/settings");
 });
 
 router.get("/register", (req, res, next) => {
@@ -109,6 +108,7 @@ router.get("/register", (req, res, next) => {
         return res.redirect("/");
     }
     res.locals.page.csrfToken = req.csrfToken();
+    res.locals.page.registrationOpen = parseInt(process.env.REGISTRATION_OPEN) * 1000;
     res.render("user/register");
 });
 
@@ -206,7 +206,7 @@ router.get("/verify/osu/:code", (req, res, next) => {
         return Promise.reject(res.redirect("/"));
     }).then((user) => {
         req.flash("success", "Thanks for verifying your osu! account!");
-        return res.redirect("/user/profile");
+        return res.redirect("/user/settings");
     });
 });
 
@@ -214,7 +214,7 @@ router.get("/verify/osu", requireLogin, (req, res, next) => {
     if (!(process.env.OSU_IRCHOST && process.env.OSU_USERNAME && process.env.OSU_IRCKEY)) {
         console.log(process.env);
         req.flash("danger", "osu! verification hasn't been set up properly. Please contact an admin.");
-        return res.redirect("/user/profile");
+        return res.redirect("/user/settings");
     }
     let user = res.locals.user;
     let token = utils.randomString(32);
@@ -225,8 +225,9 @@ router.get("/verify/osu", requireLogin, (req, res, next) => {
         return utils.sendInGameMessage(user.username, `Click [${link} this link] to verify your pls enjoy tournament account.`);
     }).then(() => {
         req.flash("info", `Verification link has been sent. Check your messages (from ${process.env.OSU_USERNAME})!`);
-        return res.redirect("/user/profile");
+        return res.redirect("/user/settings");
     });
 });
 
 module.exports = router;
+module.exports.requireLogin = requireLogin;

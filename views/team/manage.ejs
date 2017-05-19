@@ -1,0 +1,53 @@
+<% include ../includes/header %>
+
+<div class="osu-layout__section osu-layout__section--full js-content community_tournaments-index">
+    <div class="osu-layout__row osu-layout__row--page wiki-header">
+        <div class="text">
+            <h1>Manage Team</h1>
+        </div>
+    </div>
+    <div class="osu-layout__row osu-layout__row--sm1">
+        <% for (let type in messages) { %>
+            <div class="alert alert-<%- type %>">
+                <%- messages[type] %>
+            </div>
+        <% } %>
+		<div id="forum-1" class="forum-category col-sm-12 forum-colour category-osu">
+			<div class="row forum-category-header forum-colour__bg--category-osu">
+				<div class="forum-category-header__name">Team Members</div>
+				<div class="forum-category-header__description">Who you're competing with.</div>
+			</div>
+			<div class="forums osu-layout__sub-row">
+                <div class="">
+                    <form method="POST" action="/user/settings/teamUpdate">
+                        <input type="hidden" name="_csrf" value="<%- page.csrfToken %>" />
+                        <div id="options">
+                            <div class="input-group" style="padding: 5px;">
+                                <input type="text" placeholder="Username" name="options[]" class="form-control" autocomplete="off">
+                                <span class="input-group-btn">
+                                    <button class="btn-osu btn-danger" type="button" onclick="javascript:$(this).parent().parent().remove();"><i class="fa fa-trash"></i></button>
+                                </span>
+                            </div>
+                        </div>
+                        <p>
+                            <a href="javascript:add_option();" class="btn-osu btn-primary form__button"><i class="fa fa-plus"></i> Add Option</a>
+                            <button type="submit" class="btn-osu btn-success btn-lg form__button">Update <i class="fa fa-check"></i></button>
+                        </p>
+                    </form>
+                </div>
+                <div class="col-sm-6">
+                </div>
+            </div>
+        </div>
+</div>
+
+<script>
+    var option = $("#options div").clone();
+    var add_option = function() {
+        option.appendTo("#options");
+        option = $("#options div:first-child").clone();
+        option.children(".form-control").val("");
+    }
+</script>
+
+<% include ../includes/footer %>

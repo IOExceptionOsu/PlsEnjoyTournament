@@ -15,14 +15,10 @@
 		<div id="forum-1" class="forum-category col-sm-12 forum-colour category-osu">
 			<div class="row forum-category-header forum-colour__bg--category-osu">
 				<div class="forum-category-header__name">Team Information</div>
-				<div class="forum-category-header__description">Who you're competing with.</div>
+				<div class="forum-category-header__description">Manage your team.</div>
 			</div>
 			<div class="forums osu-layout__sub-row">
-                <% if (user.team) { %>
-                    You're on team <b><%- user.team.teamname %></b>!
-                <% } else { %>
-                    You're not a member of any team!
-                <% } %>
+                <a href="/team/manage" class="btn-osu btn-lg btn-primary">Manage Team</a>
             </div>
         </div>
 		<div id="forum-1" class="forum-category col-sm-12 forum-colour category-beatmaps">
