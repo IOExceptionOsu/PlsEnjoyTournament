@@ -14,20 +14,31 @@
         <% } %>
 		<div id="forum-1" class="forum-category col-sm-12 forum-colour category-osu">
 			<div class="row forum-category-header forum-colour__bg--category-osu">
+				<div class="forum-category-header__name">Registration Checklist</div>
+				<div class="forum-category-header__description">Things you need to do to complete your team's registration.</div>
+			</div>
+			<div class="forums osu-layout__sub-row">
+			</div>
+        </div>
+		<div id="forum-1" class="forum-category col-sm-12 forum-colour category-beatmaps">
+			<div class="row forum-category-header forum-colour__bg--category-beatmaps">
 				<div class="forum-category-header__name">Team Members</div>
 				<div class="forum-category-header__description">Who you're competing with.</div>
 			</div>
 			<div class="forums osu-layout__sub-row">
                 <div class="">
+                    <p>
+                        enter the names of your team members and their timezone offsets here. if your timezone is UTC+2, just put 2; if your timezone is UTC-6, put -6. to find out your timezone, visit <a href="/timezone" target="_blank">this page</a> (you might want to share this with your team to get their information as well).
+                    </p>
                     <form method="POST" action="/team/update">
                         <input type="hidden" name="_csrf" value="<%- page.csrfToken %>" />
                         <div id="players">
                             <div class="input-group" style="padding: 5px;">
                                 <div class="col-md-6">
-                                    <input type="text" placeholder="Username" name="usernames[]" class="form-control" autocomplete="off">
+                                    <input type="text" placeholder="Username" name="usernames[]" class="username-field form-control" autocomplete="off">
                                 </div>
                                 <div class="col-md-6">
-                                    <input type="text" placeholder="Timezone" name="timezones[]" class="form-control" autocomplete="off">
+                                    <input type="text" placeholder="Timezone" name="timezones[]" class="timezone-field form-control" autocomplete="off">
                                 </div>
                                 <span class="input-group-btn">
                                     <button class="btn-osu btn-danger" type="button" onclick="javascript:$(this).parent().parent().remove();"><i class="fa fa-trash"></i></button>
@@ -55,6 +66,8 @@
         }
         if (p0) {
             var name = p0[0], timezone = p0[1];
+            $("#players > div:last-child .username-field").val(name);
+            $("#players > div:last-child .timezone-field").val(timezone);
         }
         player.appendTo("#players");
         totalPlayers += 1;
@@ -62,7 +75,7 @@
         player.find(".form-control").val("");
     }
     <% for (let player of user.team) { %>
-        add_player("<%- player.username %>", "<%- player.timezone %>");
+        add_player(["<%- player.username %>", "<%- player.timezone %>"]);
     <% } %>
 </script>
 

@@ -66,6 +66,7 @@ app.use((req, res, next) => {
     // check if user is authenticated
     user.isAuthenticated(req, res).then((user) => {
         // cool, user is logged in
+        res.locals.user.id = user._id;
         res.locals.user.isAuthenticated = true;
         return user.team();
     }, (reason) => {

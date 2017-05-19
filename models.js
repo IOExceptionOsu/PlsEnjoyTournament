@@ -3,7 +3,7 @@ let mongoose = require("mongoose");
 let uuid = require("uuid");
 
 let TokenSchema = new mongoose.Schema({
-    "_id": { type: String, default: uuid.v4 },
+    "_id": { type: String, default: uuid.v4, unique: true },
     "type": String,
     "uid": String,
     "sid": String,
@@ -26,12 +26,13 @@ TeamSchema.methods.members = function () {
 module.exports.Team = mongoose.model("Team", TeamSchema);
 
 let UserSchema = new mongoose.Schema({
-    "_id": { type: String, default: uuid.v4 },
+    "_id": { type: String, default: uuid.v4, unique: true },
+    "approved": { type: Boolean, default: false },
     "admin": { type: Boolean, default: false },
     "osuid": Number,
     "teamid": String,
     "username": String,
-    "usernameLower": String,
+    "usernameLower": { type: String, unique: true },
     "email": String,
     "password": String,
     "team": [],
