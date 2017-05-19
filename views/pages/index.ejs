@@ -1,215 +1,215 @@
 <% include ../includes/header %>
 
-	<div class="osu-layout__section osu-layout__section--full js-content community_forum-forums-index">
-		<div id="forum-index-header" class="osu-layout__row osu-layout__row--page">
-			<div class="text-area">
-				<div class="text">
-					<h2>welcome</h2>
-					<h1>pls enjoy tournament 2017</h1>
-				</div>
+<div class="osu-layout__section osu-layout__section--full js-content community_forum-forums-index">
+	<div id="forum-index-header" class="osu-layout__row osu-layout__row--page">
+		<div class="text-area">
+			<div class="text">
+				<h2>welcome</h2>
+				<h1>pls enjoy tournament 2017</h1>
 			</div>
 		</div>
-		<div class="osu-layout__row">
-			<% for (let type in messages) { %>
-				<div class="alert alert-<%- type %>">
-					<%- messages[type] %>
-				</div>
-				<% } %>
-					<div id="forum-1" class="forum-category col-sm-12 forum-colour category-osu">
-						<div class="row forum-category-header forum-colour__bg--category-osu">
-							<div class="forum-category-header__name">General Information</div>
-							<div class="forum-category-header__description">Welcome!</div>
-						</div>
-						<div class="forums osu-layout__sub-row">
-							<div class="row">
-								<div class="col-md-12">
-									<p>Welcome to <b>pls enjoy tournament</b>! This is the official site for the tournament. Please check this site regularly
-										during the competition, as updates, mappool, and rankings will all be posted here. Registration for this tournament
-										will take place on this site, rather than through the forum. The registration form will open on <b>May 20</b>.</p>
-									<div class="page-header">
-										<h4>Dates</h4>
-									</div>
-									<ul>
-										<li>Registrations: <b>May 20 - June 17</b></li>
-										<li>Drawings: <b>June 18 - June 19</b></li>
-										<li>Group Stages: <b>June 24 - June 30</b></li>
-										<li>Round of 16: <b>July 1 - July 2</b></li>
-										<li>Quarterfinals: <b>July 8 - July 9</b></li>
-										<li>Semifinals: <b>July 15 - July 16</b></li>
-										<li>Finals: <b>July 22 - July 23</b></li>
-										<li>Grand Finals: <b>July 29 - July 30</b></li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div id="forum-2" class="forum-category col-sm-12 forum-colour category-beatmaps">
-						<div class="row forum-category-header forum-colour__bg--category-beatmaps">
-							<div class="forum-category-header__name">Format</div>
-							<div class="forum-category-header__description">Logistics about the competition.</div>
-						</div>
-						<div class="forums osu-layout__sub-row">
-							<div class="row">
-								<div class="col-md-12">
-									<ul>
-										<li>This is an <b>2v2 double-elimination</b> tournament.</li>
-										<li>The minimum amount of players required per team is <b>3</b> and the maximum is <b>4</b>.</li>
-										<li>There are a maximum of <b>32 teams</b> that can participate in the tournament.</li>
-										<li>The tournament will comprise of a <b>group</b> stage and a <b>double elimination</b> round.</li>
-										<li>In the double elimination round, Last Man Standing begins; the lowest scoring player of each map played will be
-											knocked out.</li>
-										<li>Game mode is <b>Team VS</b>, and played on <b>Score v2</b>.</li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div id="forum-3" class="forum-category col-sm-12 forum-colour category-other">
-						<div class="row forum-category-header forum-colour__bg--category-other">
-							<div class="forum-category-header__name">Rules</div>
-							<div class="forum-category-header__description">Rules of the game.</div>
-						</div>
-						<div class="forums osu-layout__sub-row">
-							<div class="row">
-								<div class="col-md-12">
-									<ul>
-										<li>The rank limit upon entry will be <b>1,000</b> - <b>20,000</b>; going outside of the range during the tournament
-											will result in disqualification.</li>
-										<li>A player failing a map has the opportunity to revive and his/her score will not be invalidated. However, a team
-											fail will count as a loss.</li>
-										<li>If a team fails, then the player with the lowest score on the failing team will lose a life.</li>
-										<li>Players are invited at least 15 minutes before their match start.</li>
-										<li>If a team fails to yield a full roster of at least 2 players within 15 minutes of their scheduled match time, they
-											will forfeit the match. There will not be an opportunity to reschedule matches forfeited in this manner.</li>
-									</ul>
-									<div class="page-header">
-										<h4>Group Stage</h4>
-									</div>
-									<ul>
-										<li>There will be no warm-up maps.</li>
-										<li>Each team will be allowed two bans.</li>
-										<li>The group stages are played in a round-robin format, with the top 2 teams in each group moving on.</li>
-										<li>It will be Best of 5, 3 points will win the match.</li>
-										<li>There will be 4 NM, 3 HD, HR, DT, FM and 1 TB.</li>
-										<li>Group stages will take place over the course of 2 weeks.</li>
-									</ul>
-									<div class="page-header">
-										<h4>Double Elimination</h4>
-									</div>
-									<ul>
-										<li>At the end of each map, the player on <b>either side</b> with the LOWEST score will lose a life; this is the Last
-											Man Standing concept - if a player is out of lives, they are considered out of the round, and their score will
-											no longer be counted for the rest of the match (they can choose whether to stay in the MP room or not).</li>
-										<li>The tiebreaker map will be played if both teams have a total of one life each, and <b>team score will matter regardless of lives (team with the highest collective score wins).</b></li>
-									</ul>
-									<div class="page-header">
-										<h4>Quarterfinals</h4>
-									</div>
-									<ul>
-										<li>Matches will be played in Last Man Standing format!</li>
-										<li>From RO16 and onwards, there will be warmup maps and 2 bans.</li>
-										<li>It will be Best of 7, 4 points will win the match.</li>
-										<li>There will be 4 NM, 3 HD, HR, DT, FM and 3 TB.</li>
-									</ul>
-									<div class="page-header">
-										<h4>Semifinals & Finals</h4>
-									</div>
-									<ul>
-										<li>Matches will be played in Last Man Standing format!</li>
-										<li>It will be Best of 11, 6 points will win the match.</li>
-										<li>There will be 4 NM, 4 HD, HR, DT, FM and 3 TB.</li>
-										<li>Each round will last 1 week.</li>
-									</ul>
-									<div class="page-header">
-										<h4>Grand Finals</h4>
-									</div>
-									<ul>
-										<li>Matches will be played in Last Man Standing format!</li>
-										<li>It will be Best of 13, 7 points will win the match.</li>
-										<li>There will be 5 NM, 4 HD, HR, DT, FM and 3 TB.</li>
-										<li>There will be a bracket reset if necessary.</li>
-									</ul>
-									<div class="page-header">
-										<h4>The Match</h4>
-									</div>
-									<ul>
-										<li>One member of each team will !roll, and the one with the higher number can choose either to ban first or second.</li>
-										<li>Each team alternates banning maps until there are a total of 4 banned maps (each team has a total of <b>2</b> banned
-											maps).</li>
-										<li>Tiebreaker cannot be banned.</li>
-										<li>The higher rolling team gets to pick the first warm-up map <b>and</b> the first actual map.</li>
-										<li>Warm-up maps must be less than <b>5:30</b></li>
-									</ul>
-									<h5>Substitutions</h5>
-									<ul>
-										<li>If a team wishes to substitute a player, the substitute does not get a new stock of full lives but receives the
-											number of lives held by the player subbed out for the substitute.</li>
-										<li>There is to be only one substitution per map.</li>
-										<li>Two active players can not substitute for one another.</li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div id="forum-2" class="forum-category col-sm-12 forum-colour category-language-specific">
-						<div class="row forum-category-header forum-colour__bg--category-language-specific">
-							<div class="forum-category-header__name">Map Pool</div>
-							<div class="forum-category-header__description">The maps you have to play.</div>
-						</div>
-						<div class="forums osu-layout__sub-row">
-							<div class="row">
-								<div class="col-md-12">
-									<p>The first map pool for the group stage will be released at the end of the registration phase. Each subsequent map
-										pool will be released at the end of a complete round; for example, the semifinals mappool will be released right
-										after the quarterfinals are completed.</p>
-									<div class="page-header">
-										<h4>Group Stage</h4>
-									</div>
-									<ul>
-										<li>4 No Mod maps.</li>
-										<li>3 Hidden maps.</li>
-										<li>3 Hard Rock maps.</li>
-										<li>3 Double Time maps.</li>
-										<li>1 Tiebreaker map.</li>
-									</ul>
-									<div class="page-header">
-										<h4>RO16 and Quarterfinals</h4>
-									</div>
-									<ul>
-										<li>4 No Mod maps.</li>
-										<li>3 Hidden maps.</li>
-										<li>3 Hard Rock maps.</li>
-										<li>3 Double Time maps.</li>
-										<li>3 Tiebreaker maps.</li>
-									</ul>
-									<div class="page-header">
-										<h4>Semifinals & Finals</h4>
-									</div>
-									<ul>
-										<li>4 No Mod maps.</li>
-										<li>4 Hidden maps.</li>
-										<li>4 Hard Rock maps.</li>
-										<li>4 Double Time maps.</li>
-										<li>3 Tiebreaker maps.</li>
-									</ul>
-									<div class="page-header">
-										<h4>Grand Finals</h4>
-									</div>
-									<ul>
-										<li>5 No Mod maps.</li>
-										<li>4 Hidden maps.</li>
-										<li>4 Hard Rock maps.</li>
-										<li>4 Double Time maps.</li>
-										<li>3 Tiebreaker maps.</li>
-									</ul>
-									<br>
-									<p>In a freemod pick, each team is required to have at least one player to play with at least 1 mod, restricted to
-										Hidden, Hard Rock and/or Easy and permitted to pick a combination of these mods.</p>
-								</div>
-							</div>
-						</div>
-					</div>
-		</div>
 	</div>
+	<div class="osu-layout__row">
+		<% for (let type in messages) { %>
+			<div class="alert alert-<%- type %>">
+				<%- messages[type] %>
+			</div>
+			<% } %>
+				<div id="forum-1" class="forum-category col-sm-12 forum-colour category-osu">
+					<div class="row forum-category-header forum-colour__bg--category-osu">
+						<div class="forum-category-header__name">General Information</div>
+						<div class="forum-category-header__description">Welcome!</div>
+					</div>
+					<div class="forums osu-layout__sub-row">
+						<div class="row">
+							<div class="col-md-12">
+								<p>Welcome to <b>pls enjoy tournament</b>! This is the official site for the tournament. Please check this site regularly
+									during the competition, as updates, mappool, and rankings will all be posted here. Registration for this tournament
+									will take place on this site, rather than through the forum. The registration form will open on <b>May 20</b>.</p>
+								<div class="page-header">
+									<h4>Dates</h4>
+								</div>
+								<ul>
+									<li>Registrations: <b>May 20 - June 17</b></li>
+									<li>Drawings: <b>June 18 - June 19</b></li>
+									<li>Group Stages: <b>June 24 - June 30</b></li>
+									<li>Round of 16: <b>July 1 - July 2</b></li>
+									<li>Quarterfinals: <b>July 8 - July 9</b></li>
+									<li>Semifinals: <b>July 15 - July 16</b></li>
+									<li>Finals: <b>July 22 - July 23</b></li>
+									<li>Grand Finals: <b>July 29 - July 30</b></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div id="forum-2" class="forum-category col-sm-12 forum-colour category-beatmaps">
+					<div class="row forum-category-header forum-colour__bg--category-beatmaps">
+						<div class="forum-category-header__name">Format</div>
+						<div class="forum-category-header__description">Logistics about the competition.</div>
+					</div>
+					<div class="forums osu-layout__sub-row">
+						<div class="row">
+							<div class="col-md-12">
+								<ul>
+									<li>This is an <b>2v2 double-elimination</b> tournament.</li>
+									<li>The minimum amount of players required per team is <b>3</b> and the maximum is <b>4</b>.</li>
+									<li>There are a maximum of <b>32 teams</b> that can participate in the tournament.</li>
+									<li>The tournament will comprise of a <b>group</b> stage and a <b>double elimination</b> round.</li>
+									<li>In the double elimination round, Last Man Standing begins; the lowest scoring player of each map played will be
+										knocked out.</li>
+									<li>Game mode is <b>Team VS</b>, and played on <b>Score v2</b>.</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div id="forum-3" class="forum-category col-sm-12 forum-colour category-other">
+					<div class="row forum-category-header forum-colour__bg--category-other">
+						<div class="forum-category-header__name">Rules</div>
+						<div class="forum-category-header__description">Rules of the game.</div>
+					</div>
+					<div class="forums osu-layout__sub-row">
+						<div class="row">
+							<div class="col-md-12">
+								<ul>
+									<li>The rank limit upon entry will be <b>1,000</b> - <b>20,000</b>; going outside of the range during the tournament
+										will result in disqualification.</li>
+									<li>A player failing a map has the opportunity to revive and his/her score will not be invalidated. However, a team
+										fail will count as a loss.</li>
+									<li>If a team fails, then the player with the lowest score on the failing team will lose a life.</li>
+									<li>Players are invited at least 15 minutes before their match start.</li>
+									<li>If a team fails to yield a full roster of at least 2 players within 15 minutes of their scheduled match time, they
+										will forfeit the match. There will not be an opportunity to reschedule matches forfeited in this manner.</li>
+								</ul>
+								<div class="page-header">
+									<h4>Group Stage</h4>
+								</div>
+								<ul>
+									<li>There will be no warm-up maps.</li>
+									<li>Each team will be allowed two bans.</li>
+									<li>The group stages are played in a round-robin format, with the top 2 teams in each group moving on.</li>
+									<li>It will be Best of 5, 3 points will win the match.</li>
+									<li>There will be 4 NM, 3 HD, HR, DT, FM and 1 TB.</li>
+									<li>Group stages will take place over the course of 2 weeks.</li>
+								</ul>
+								<div class="page-header">
+									<h4>Double Elimination</h4>
+								</div>
+								<ul>
+									<li>At the end of each map, the player on <b>either side</b> with the LOWEST score will lose a life; this is the Last
+										Man Standing concept - if a player is out of lives, they are considered out of the round, and their score will
+										no longer be counted for the rest of the match (they can choose whether to stay in the MP room or not).</li>
+									<li>The tiebreaker map will be played if both teams have a total of one life each, and <b>team score will matter regardless of lives (team with the highest collective score wins).</b></li>
+								</ul>
+								<div class="page-header">
+									<h4>Quarterfinals</h4>
+								</div>
+								<ul>
+									<li>Matches will be played in Last Man Standing format!</li>
+									<li>From RO16 and onwards, there will be warmup maps and 2 bans.</li>
+									<li>It will be Best of 7, 4 points will win the match.</li>
+									<li>There will be 4 NM, 3 HD, HR, DT, FM and 3 TB.</li>
+								</ul>
+								<div class="page-header">
+									<h4>Semifinals & Finals</h4>
+								</div>
+								<ul>
+									<li>Matches will be played in Last Man Standing format!</li>
+									<li>It will be Best of 11, 6 points will win the match.</li>
+									<li>There will be 4 NM, 4 HD, HR, DT, FM and 3 TB.</li>
+									<li>Each round will last 1 week.</li>
+								</ul>
+								<div class="page-header">
+									<h4>Grand Finals</h4>
+								</div>
+								<ul>
+									<li>Matches will be played in Last Man Standing format!</li>
+									<li>It will be Best of 13, 7 points will win the match.</li>
+									<li>There will be 5 NM, 4 HD, HR, DT, FM and 3 TB.</li>
+									<li>There will be a bracket reset if necessary.</li>
+								</ul>
+								<div class="page-header">
+									<h4>The Match</h4>
+								</div>
+								<ul>
+									<li>One member of each team will !roll, and the one with the higher number can choose either to ban first or second.</li>
+									<li>Each team alternates banning maps until there are a total of 4 banned maps (each team has a total of <b>2</b> banned
+										maps).</li>
+									<li>Tiebreaker cannot be banned.</li>
+									<li>The higher rolling team gets to pick the first warm-up map <b>and</b> the first actual map.</li>
+									<li>Warm-up maps must be less than <b>5:30</b></li>
+								</ul>
+								<h5>Substitutions</h5>
+								<ul>
+									<li>If a team wishes to substitute a player, the substitute does not get a new stock of full lives but receives the
+										number of lives held by the player subbed out for the substitute.</li>
+									<li>There is to be only one substitution per map.</li>
+									<li>Two active players can not substitute for one another.</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div id="forum-2" class="forum-category col-sm-12 forum-colour category-language-specific">
+					<div class="row forum-category-header forum-colour__bg--category-language-specific">
+						<div class="forum-category-header__name">Map Pool</div>
+						<div class="forum-category-header__description">The maps you have to play.</div>
+					</div>
+					<div class="forums osu-layout__sub-row">
+						<div class="row">
+							<div class="col-md-12">
+								<p>The first map pool for the group stage will be released at the end of the registration phase. Each subsequent map
+									pool will be released at the end of a complete round; for example, the semifinals mappool will be released right
+									after the quarterfinals are completed.</p>
+								<div class="page-header">
+									<h4>Group Stage</h4>
+								</div>
+								<ul>
+									<li>4 No Mod maps.</li>
+									<li>3 Hidden maps.</li>
+									<li>3 Hard Rock maps.</li>
+									<li>3 Double Time maps.</li>
+									<li>1 Tiebreaker map.</li>
+								</ul>
+								<div class="page-header">
+									<h4>RO16 and Quarterfinals</h4>
+								</div>
+								<ul>
+									<li>4 No Mod maps.</li>
+									<li>3 Hidden maps.</li>
+									<li>3 Hard Rock maps.</li>
+									<li>3 Double Time maps.</li>
+									<li>3 Tiebreaker maps.</li>
+								</ul>
+								<div class="page-header">
+									<h4>Semifinals & Finals</h4>
+								</div>
+								<ul>
+									<li>4 No Mod maps.</li>
+									<li>4 Hidden maps.</li>
+									<li>4 Hard Rock maps.</li>
+									<li>4 Double Time maps.</li>
+									<li>3 Tiebreaker maps.</li>
+								</ul>
+								<div class="page-header">
+									<h4>Grand Finals</h4>
+								</div>
+								<ul>
+									<li>5 No Mod maps.</li>
+									<li>4 Hidden maps.</li>
+									<li>4 Hard Rock maps.</li>
+									<li>4 Double Time maps.</li>
+									<li>3 Tiebreaker maps.</li>
+								</ul>
+								<br>
+								<p>In a freemod pick, each team is required to have at least one player to play with at least 1 mod, restricted to
+									Hidden, Hard Rock and/or Easy and permitted to pick a combination of these mods.</p>
+							</div>
+						</div>
+					</div>
+				</div>
+	</div>
+</div>
 
-	<% include ../includes/footer %>
+<% include ../includes/footer %>

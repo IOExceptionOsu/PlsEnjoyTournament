@@ -3,7 +3,7 @@
 <div class="osu-layout__section osu-layout__section--full js-content community_tournaments-index">
     <div class="osu-layout__row osu-layout__row--page wiki-header">
         <div class="text">
-            <h1>Manage Team</h1>
+            <h1>manage team</h1>
         </div>
     </div>
     <div class="osu-layout__row osu-layout__row--sm1">
@@ -19,18 +19,23 @@
 			</div>
 			<div class="forums osu-layout__sub-row">
                 <div class="">
-                    <form method="POST" action="/user/settings/teamUpdate">
+                    <form method="POST" action="/team/update">
                         <input type="hidden" name="_csrf" value="<%- page.csrfToken %>" />
-                        <div id="options">
+                        <div id="players">
                             <div class="input-group" style="padding: 5px;">
-                                <input type="text" placeholder="Username" name="options[]" class="form-control" autocomplete="off">
+                                <div class="col-md-6">
+                                    <input type="text" placeholder="Username" name="usernames[]" class="form-control" autocomplete="off">
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="text" placeholder="Timezone" name="timezones[]" class="form-control" autocomplete="off">
+                                </div>
                                 <span class="input-group-btn">
                                     <button class="btn-osu btn-danger" type="button" onclick="javascript:$(this).parent().parent().remove();"><i class="fa fa-trash"></i></button>
                                 </span>
                             </div>
                         </div>
                         <p>
-                            <a href="javascript:add_option();" class="btn-osu btn-primary form__button"><i class="fa fa-plus"></i> Add Option</a>
+                            <a href="javascript:add_player();" class="btn-osu btn-primary form__button"><i class="fa fa-plus"></i> Add player</a>
                             <button type="submit" class="btn-osu btn-success btn-lg form__button">Update <i class="fa fa-check"></i></button>
                         </p>
                     </form>
@@ -42,12 +47,23 @@
 </div>
 
 <script>
-    var option = $("#options div").clone();
-    var add_option = function() {
-        option.appendTo("#options");
-        option = $("#options div:first-child").clone();
-        option.children(".form-control").val("");
+    var totalPlayers = 1;
+    var player = $("#players > div").clone();
+    var add_player = function(p0) {
+        if (totalPlayers >= 4) {
+            return;
+        }
+        if (p0) {
+            var name = p0[0], timezone = p0[1];
+        }
+        player.appendTo("#players");
+        totalPlayers += 1;
+        player = $("#players > div:first-child").clone();
+        player.find(".form-control").val("");
     }
+    <% for (let player of user.team) { %>
+        add_player("<%- player.username %>", "<%- player.timezone %>");
+    <% } %>
 </script>
 
 <% include ../includes/footer %>

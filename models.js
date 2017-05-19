@@ -34,6 +34,7 @@ let UserSchema = new mongoose.Schema({
     "usernameLower": String,
     "email": String,
     "password": String,
+    "team": [],
     "registered": { type: Date, default: Date.now },
     "emailVerified": { type: Boolean, default: false },
     "emailCode": String,
@@ -58,10 +59,6 @@ UserSchema.query.byUsername = function (username) {
 
 UserSchema.methods.checkPassword = function (candidate) {
     return bcrypt.compare(candidate, this.password);
-};
-
-UserSchema.methods.team = function () {
-    return module.exports.Team.findOne({ _id: this.teamid });
 };
 
 module.exports.User = mongoose.model("User", UserSchema);

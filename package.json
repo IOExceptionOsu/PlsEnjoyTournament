@@ -30,6 +30,7 @@
     "express-minify": "^0.2.0",
     "gmail-send": "^1.2.9",
     "mongoose": "^4.9.7",
+    "osu": "^1.1.0",
     "uuid": "^3.0.1"
   }
 }

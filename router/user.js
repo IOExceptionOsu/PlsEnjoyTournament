@@ -1,5 +1,6 @@
 let express = require("express");
 let form = require("express-form"), field = form.field;
+let osu = require("osu")(process.env.OSU_APIKEY);
 
 let models = require("../models"),
     Token = models.Token,
@@ -117,6 +118,7 @@ router.post("/register", form(
     field("username").trim().required(),
     field("password").required()
 ), (req, res, next) => {
+    var hpwd;
     if (res.locals.user.isAuthenticated) {
         // user is already logged in
         return res.redirect("/");
@@ -139,13 +141,22 @@ router.post("/register", form(
         }
         return utils.hashPassword(req.form.password);
     }).then((hashedPassword) => {
+        hpwd = hashedPassword;
+        return osu.get_user({ u: req.form.username.toLowerCase(), type: "string" });
+    }).then((users) => {
+        let oid = -1;
+        if (users && users.length) {
+            oid = parseInt(users[0].user_id);
+        }
         // create a new user object
         let user = new User({
             email: req.form.email.toLowerCase(),
             username: req.form.username,
             usernameLower: req.form.username.toLowerCase(),
-            password: hashedPassword,
-            emailCode: utils.randomString(32)
+            password: hpwd,
+            emailCode: utils.randomString(32),
+            osuid: oid,
+            team: [{ username: req.form.username, timezone: 0 }]
         });
         return user.save();
     }).then((user) => {

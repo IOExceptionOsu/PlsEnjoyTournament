@@ -14,4 +14,8 @@ router.get("/", (req, res, next) => {
     res.render("pages/index");
 });
 
+router.get("/timezone", (req, res, next) => {
+    res.render("pages/timezone");
+});
+
 module.exports = router;
