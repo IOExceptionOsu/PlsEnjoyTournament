@@ -156,7 +156,8 @@ router.post("/register", form(
             password: hpwd,
             emailCode: utils.randomString(32),
             osuid: oid,
-            team: [{ username: req.form.username, timezone: 0 }]
+            team: [{ username: req.form.username, timezone: 0 }],
+            teamname: "Team " + req.form.username
         });
         return user.save();
     }).then((user) => {

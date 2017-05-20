@@ -87,8 +87,7 @@ app.use(router);
 // error handler
 app.use((err, req, res, next) => {
     if (err) {
-        console.log("SHIET");
-        return res.send("shiet " + err);
+        return res.send("There was an error: " + err);
     }
     return res.send("no error?");
 });

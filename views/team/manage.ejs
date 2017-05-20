@@ -18,6 +18,18 @@
 				<div class="forum-category-header__description">Things you need to do to complete your team's registration.</div>
 			</div>
 			<div class="forums osu-layout__sub-row">
+                <ul>
+                    <% for (let item of user.checklist) { %>
+                        <li>
+                            <% if (item.good) { %>
+                                <i class="fa fa-check" style="color: green;"></i>
+                            <% } else { %>
+                                <i class="fa fa-exclamation-triangle" style="color: red;"></i>
+                            <% } %>
+                            <%- item.message %>
+                        </li>
+                    <% } %>
+                </ul>
 			</div>
         </div>
 		<div id="forum-1" class="forum-category col-sm-12 forum-colour category-beatmaps">
@@ -58,24 +70,23 @@
 </div>
 
 <script>
-    var totalPlayers = 1;
+    var totalPlayers = 0;
     var player = $("#players > div").clone();
     var add_player = function(p0) {
-        if (totalPlayers >= 4) {
-            return;
-        }
         if (p0) {
             var name = p0[0], timezone = p0[1];
             $("#players > div:last-child .username-field").val(name);
             $("#players > div:last-child .timezone-field").val(timezone);
+        }
+        if (totalPlayers >= 3) {
+            return;
         }
         player.appendTo("#players");
         totalPlayers += 1;
         player = $("#players > div:first-child").clone();
         player.find(".form-control").val("");
     }
-    <% for (let player of user.team) { %>
-        add_player(["<%- player.username %>", "<%- player.timezone %>"]);
+    <% for (let player of user.team) { %>add_player(["<%- player.username %>", "<%- (player.timezone || player.timezone === 0) ? player.timezone : "" %>"]);
     <% } %>
 </script>
 

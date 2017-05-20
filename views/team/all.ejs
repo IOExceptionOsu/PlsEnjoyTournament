@@ -1,0 +1,38 @@
+<% include ../includes/header %>
+
+<div class="osu-layout__section osu-layout__section--full js-content community_tournaments-index">
+    <div class="osu-layout__row osu-layout__row--page wiki-header">
+        <div class="text">
+            <h1>all teams</h1>
+        </div>
+    </div>
+    <div class="osu-layout__row osu-layout__row--sm1">
+        <% for (let type in messages) { %>
+            <div class="alert alert-<%- type %>">
+                <%- messages[type] %>
+            </div>
+        <% } %>
+        <% for (let team of teams) { %>
+            <% var color = (team.approved) ? "osu" : "beatmaps"; %>
+            <div id="forum-1" class="forum-category col-sm-12 forum-colour category-<%- color %>">
+                <div class="row forum-category-header forum-colour__bg--category-<%- color %>">
+                    <div class="forum-category-header__name"><%- team.teamname %></div>
+                    <div class="forum-category-header__description"><%- (team.approved) ? "" : "Not " %> Approved / <%- team.members.length %> member(s).</div>
+                </div>
+                <div class="forums osu-layout__sub-row">
+                    <% for (let member of team.members) { %>
+                        <a href="https://osu.ppy.sh/u/<%- member.id %>" target="_blank">
+                            <div class="forum-post__card" style="display: inline-block; margin: auto 20px; text-align: center;">
+                                <img src="https://a.ppy.sh/<%- member.id %>" style="width: 168px; height: 168px;" />
+                                <h4 style="margin: 0;"><%- member.username %></h4>
+                                Rank: <%- member.rank %>
+                            </div>
+                        </a>
+                    <% } %>
+                </div>
+            </div>
+        <% } %>
+    </div>
+</div>
+
+<% include ../includes/footer %>
