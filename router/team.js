@@ -31,6 +31,10 @@ router.get("/all", (req, res, next) => {
                 memberPromises.push(promise);
             });
             teamPromises.push(Promise.all(memberPromises).then(() => {
+                members.sort(function (a, b) {
+                    if (a.username == b.username) return 0;
+                    return a.username > b.username ? 1 : -1;
+                });
                 res.locals.teams.push({
                     approved: user.approved,
                     approvalDate: user.approvalDate,
@@ -43,6 +47,11 @@ router.get("/all", (req, res, next) => {
         });
         return Promise.all(teamPromises);
     }).then(() => {
+        res.locals.teams.sort(function (a, b) {
+            let m = a.approved ? 1 : 0;
+            let n = b.approved ? 1 : 0;
+            return n - m;
+        });
         res.render("team/all");
     });
 });
