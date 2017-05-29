@@ -102,11 +102,13 @@ router.post("/update", user.requireLogin, (req, res, next) => {
         if (user === null) {
             return Promise.reject();
         }
+        user.team = team.map(([a, b]) => ({ username: a, timezone: b }));
+        return user.save();
+    }).then(() => {
         return user.checkTeamEligibility();
     }).then((checklist) => {
         user.checklist = checklist;
         user.allGood = checklist.filter(x => !x.good).length == 0;
-        user.team = team.map(([a, b]) => ({ username: a, timezone: b }));
         user.lastUpdated = new Date();
         if (user.allGood) {
             user.approved = true;

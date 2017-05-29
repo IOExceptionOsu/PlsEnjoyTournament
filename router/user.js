@@ -157,7 +157,8 @@ router.post("/register", form(
             emailCode: utils.randomString(32),
             osuid: oid,
             team: [{ username: req.form.username, timezone: 0 }],
-            teamname: "Team " + req.form.username
+            teamname: "Team " + req.form.username,
+            checklist: [{ good: false, message: "Please fill out your information below." }]
         });
         return user.save();
     }).then((user) => {
