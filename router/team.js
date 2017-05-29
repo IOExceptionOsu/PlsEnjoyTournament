@@ -50,7 +50,8 @@ router.get("/all", (req, res, next) => {
         res.locals.teams.sort(function (a, b) {
             let m = a.approved ? 1 : 0;
             let n = b.approved ? 1 : 0;
-            return n - m;
+            if (n != m) return n - m;
+            return a.lastUpdated - b.lastUpdated;
         });
         res.render("team/all");
     });

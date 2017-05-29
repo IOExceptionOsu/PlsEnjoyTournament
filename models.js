@@ -40,7 +40,7 @@ OsuUserSchema.statics.getInfo = function (username) {
     //     return new Promise((resolve, reject) => { resolve(); });
     // }
     return module.exports.OsuUser.findOne({ usernameLower: username.toLowerCase() }).then((user) => {
-        if (user !== null && user.lastUpdated.getTime() + 28800000 > Date.now()) {
+        if (user !== null && user.lastUpdated && user.lastUpdated.getTime() + 28800000 > Date.now()) {
             return Promise.resolve(user);
         } else {
             let ou = new module.exports.OsuUser();
