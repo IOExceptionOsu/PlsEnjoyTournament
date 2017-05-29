@@ -3,7 +3,7 @@
 <div class="osu-layout__section osu-layout__section--full js-content community_tournaments-index">
     <div class="osu-layout__row osu-layout__row--page wiki-header">
         <div class="text">
-            <h1>manage team</h1>
+            <h1>manage team <b><%- user.teamname %></b></h1>
         </div>
     </div>
     <div class="osu-layout__row osu-layout__row--sm1">
@@ -14,10 +14,11 @@
         <% } %>
 		<div id="forum-1" class="forum-category col-sm-12 forum-colour category-osu">
 			<div class="row forum-category-header forum-colour__bg--category-osu">
-				<div class="forum-category-header__name">Registration Checklist</div>
+				<div class="forum-category-header__name">Registration</div>
 				<div class="forum-category-header__description">Things you need to do to complete your team's registration.</div>
 			</div>
 			<div class="forums osu-layout__sub-row">
+                <h4>Registration Checklist</h4>
                 <ul>
                     <% for (let item of user.checklist) { %>
                         <li>
@@ -29,7 +30,25 @@
                             <%- item.message %>
                         </li>
                     <% } %>
+                    <% if (user.checklist.length == 0) { %>
+                        <li>
+                            <i class="fa fa-check" style="color: green;"></i>
+                            You're good to go!
+                        </li>
+                    <% } %>
                 </ul>
+                <h4>Change Team Name</h4>
+                <form method="POST" action="/team/rename">
+                    <div class="input-group">
+                        <input type="hidden" name="_csrf" value="<%- page.csrfToken %>" />
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" name="teamname" autocomplete="off" value="<%- user.teamname %>" />
+                        </div>
+                        <div class="col-md-3">
+                            <input type="submit" value="Update" class="btn-osu btn-success" />
+                        </div>
+                    </div>
+                </form>
 			</div>
         </div>
 		<div id="forum-1" class="forum-category col-sm-12 forum-colour category-beatmaps">

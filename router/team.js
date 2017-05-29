@@ -1,4 +1,5 @@
 let express = require("express");
+let form = require("express-form"), field = form.field;
 
 let user = require("./user");
 let models = require("../models"),
@@ -52,6 +53,22 @@ router.get("/manage", user.requireLogin, (req, res, next) => {
     //     res.locals.user.registrationChecklist = checklist;
     //     res.locals.user.allGood = checklist.filter(x => !x.good).length == 0;
     res.render("team/manage");
+});
+
+router.post("/rename", user.requireLogin, form(field("teamname").trim().maxLength(24).required()), (req, res, next) => {
+    if (!req.form.isValid) {
+        req.flash("danger", "Couldn't update teamname: please enter a teamname.");
+        return res.redirect("/team/manage");
+    }
+    let newTeamname = req.form.teamname;
+    User.findOne({ _id: res.locals.user.id }).then((user) => {
+        user.teamname = newTeamname;
+        user.save().then(() => {
+            req.flash("success", "Teamname updated!");
+            return res.redirect("/team/manage");
+        });
+    });
+    // res.send(res.locals.user.toString());
 });
 
 router.post("/update", user.requireLogin, (req, res, next) => {
