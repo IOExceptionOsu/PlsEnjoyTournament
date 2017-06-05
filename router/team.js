@@ -17,7 +17,7 @@ router.get("/all", (req, res, next) => {
             let members = [];
             let memberPromises = [];
             user.team.forEach((member) => {
-                let promise = OsuUser.findOne({ usernameLower: member.username.toLowerCase() }).then((ou) => {
+                let promise = OsuUser.getInfo(member.username).then((ou) => {
                     if (!ou) {
                         ou = { rank: "None", id: -1 };
                     }
